@@ -1,0 +1,76 @@
+@import "reset";
+*{
+  user-select:none;
+}
+$h-heigth:50px;
+$f-heigth:40px;
+
+.tab-maring{
+  margin-top: $h-heigth;
+  margin-bottom: $f-heigth;
+}
+
+@mixin pagefull{
+  width: 100%;
+  height: 100%;
+}
+
+//单行超出省略
+@mixin text-overflow{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+// 多少行超出省略
+@mixin lineclamp($height, $count) {
+  height: $height;
+  line-height: $height / $count;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp: $count;
+  word-wrap: break-word;
+}
+
+// 绝对定位
+@mixin absolute-point($zindex, $top:0, $left:0){
+  position: absolute;
+  top: $top;
+  left: $left;
+  z-index:$zindex;
+}
+// 固定定位，一个方向的偏移
+@mixin fixed-point($zindex, $top:top, $left:left){
+  position: fixed;
+  #{$top}: 0;
+  #{$left}: 0;
+  z-index:$zindex;
+}
+@mixin cover($opacity){
+  @include pagefull;
+  background:rgba(0,0,0,$opacity);
+  filter:alpha(opacity=$opacity * 100);  //设置透明度为60%
+  opacity:$opacity;  //非IE浏览器下设置透明度为60%
+}
+@mixin blur ($px) {
+  // 若浏览器支持 backdrop-filter，则透明度为 50%，并启用毛玻璃
+  @supports (-webkit-backdrop-filter: blur($px)) or (backdrop-filter: blur($px)) {
+    -webkit-backdrop-filter: blur($px);
+    backdrop-filter: blur($px);
+  }
+  
+  // 若浏览器器不支持，则使用 MaterialDesign 的风格
+  @supports not ((-webkit-backdrop-filter: blur($px)) or (backdrop-filter: blur($px))) {
+    &:before{
+      content: '';
+      position: absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index: -1;
+      background: rgba(0,0,0,0.6);
+    }
+  }
+}

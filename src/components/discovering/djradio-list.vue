@@ -4,7 +4,7 @@
 
 <script>
   export default {
-    name: "meunlist"
+    name: "djradio-list"
   }
 </script>
 

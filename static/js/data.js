@@ -1,5 +1,6 @@
 // 数据交互相关方法
 // 比如图片加载   ajax请求的封装等等
+const baiduApi = 'http://tingapi.ting.baidu.com/v1/restserver/ting';
 export const data = {
 	// 图片加载的一个promise  path 是图片的地址
 	preloadImage (path) {

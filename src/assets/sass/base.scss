@@ -1,13 +1,30 @@
 @import "reset";
+@import '../../../static/font-icon/style.css';
 *{
   user-select:none;
 }
-$h-heigth:50px;
-$f-heigth:40px;
+html{
+  height: 100%;
+}
+body{
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+.icon{
+  display: inline-block;
+}
+$mainColor: #c62f2f;
+$fontColor: #333;
+$lineColor: #eaeaea;
 
-.tab-maring{
-  margin-top: $h-heigth;
-  margin-bottom: $f-heigth;
+$h-heigth:50px;
+$f-heigth:45px;
+
+@mixin active-bg{
+  &:active{
+    background: #d5d5d5;
+  }
 }
 
 @mixin pagefull{
@@ -23,8 +40,8 @@ $f-heigth:40px;
 }
 // 多少行超出省略
 @mixin lineclamp($height, $count) {
-  height: $height;
-  line-height: $height / $count;
+  height: $height + px;
+  line-height: ($height / $count) + px;
   overflow:hidden;
   text-overflow:ellipsis;
   display:-webkit-box;
@@ -40,7 +57,7 @@ $f-heigth:40px;
   left: $left;
   z-index:$zindex;
 }
-// 固定定位，一个方向的偏移
+// 固定定位
 @mixin fixed-point($zindex, $top:top, $left:left){
   position: fixed;
   #{$top}: 0;

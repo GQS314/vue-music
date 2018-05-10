@@ -11,8 +11,8 @@ export default {
 }
 </script>
 
-<style>
-  /*@import "./assets/sass/reset.css";*/
-  /*@import "../static/font-icon/style.css";*/
-  /*@import "./assets/sass/base.scss";*/
+<style lang="scss">
+  #app{
+    height: 100%;
+  }
 </style>

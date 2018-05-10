@@ -3,18 +3,22 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-// import './common/sass/reset.css'
-import '../static/font-icon/style.css'
-import './assets/sass/base.scss'
 import VueResource from 'vue-resource'
-Vue.use(VueResource);
+import Vuex from 'vuex'
+import './assets/sass/base.scss'
+import store from './store/index'
+import api from './service/api'
 
+Vue.prototype.$api = api;
+Vue.use(Vuex);
+Vue.use(VueResource);
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

@@ -1,5 +1,5 @@
 {
-  "song_list": [
+  "myMucis": [
     {
       "artist_id": "362",
       "language": "\u56fd\u8bed",
@@ -115,20 +115,9 @@
       "album_1000_1000": "http:\/\/qukufile2.qianqian.com\/data2\/pic\/0a6865b7a3537231cf6a46f902bd21f5\/589815810\/589815810.JPG@s_1,w_1000,h_1000"
     }
   ],
-  "billboard": {
-    "billboard_type": "1",
-    "billboard_no": "2554",
-    "update_date": "2018-05-09",
-    "billboard_songnum": "154",
-    "havemore": 1,
-    "name": "\u65b0\u6b4c\u699c",
-    "comment": "\u8be5\u699c\u5355\u662f\u6839\u636e\u767e\u5ea6\u97f3\u4e50\u5e73\u53f0\u6b4c\u66f2\u6bcf\u65e5\u64ad\u653e\u91cf\u81ea\u52a8\u751f\u6210\u7684\u6570\u636e\u699c\u5355\uff0c\u7edf\u8ba1\u8303\u56f4\u4e3a\u8fd1\u671f\u53d1\u884c\u7684\u6b4c\u66f2\uff0c\u6bcf\u65e5\u66f4\u65b0\u4e00\u6b21",
-    "pic_s192": "http:\/\/hiphotos.qianqian.com\/ting\/pic\/item\/9922720e0cf3d7caf39ebc10f11fbe096b63a968.jpg",
-    "pic_s640": "http:\/\/hiphotos.qianqian.com\/ting\/pic\/item\/f7246b600c33874495c4d089530fd9f9d62aa0c6.jpg",
-    "pic_s444": "http:\/\/hiphotos.qianqian.com\/ting\/pic\/item\/78310a55b319ebc4845c84eb8026cffc1e17169f.jpg",
-    "pic_s260": "http:\/\/hiphotos.qianqian.com\/ting\/pic\/item\/e850352ac65c1038cb0f3cb0b0119313b07e894b.jpg",
-    "pic_s210": "http:\/\/business.cdn.qianqian.com\/qianqian\/pic\/bos_client_c49310115801d43d42a98fdc357f6057.jpg",
-    "web_url": "http:\/\/music.baidu.com\/top\/new"
-  },
-  "error_code": 22000
+  "recentlyPlayed": [],
+  "myRadio": [],
+  "myCollection": [],
+  "createPlaylist": {},
+  "collectionPlaylist": {}
 }

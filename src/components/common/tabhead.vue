@@ -4,10 +4,11 @@
        @click="sttingShow"></i>
     <i class="h-sec icon-search"></i>
     <div class="h-tab">
-      <i v-for="(tab, index) in tabs"
-         :key="tab"
-         :class="['icon-'+tab, { active: currentTab === index }]"
-         @click="changTab(index)"></i>
+      <router-link v-for="(meun, index) in meuns"
+                   :to="meun.route"
+                   :key="index"
+                   :class="['icon-'+meun.icon, { active: currentTab === index }]"
+                   @click.native="changTab(index)"></router-link>
     </div>
   </header>
 </template>
@@ -15,10 +16,14 @@
 <script>
   export default {
     name: "tabhead",
-    props: ['currentTab'],
     data() {
       return {
-        tabs: ['music', 'wangyi', 'community']
+        currentTab : 1,
+        meuns: [
+          {icon: 'music', route: '/mymusic'},
+          {icon: 'wangyi', route: '/discovering'},
+          {icon: 'community', route: '/friend'}
+        ]
       }
     },
     methods: {
@@ -26,7 +31,7 @@
         this.$emit('sttingShow');
       },
       changTab(index) {
-        this.$emit('changTab',index);
+        this.currentTab = index;
       }
     }
   }
@@ -49,7 +54,7 @@ npm install --save-dev node-sass
     >.h-sec{
       float: right;
     }
-    i{
+    i,a{
       color: #eee;
       font-size: 2.5rem;
       line-height: $h-heigth;
@@ -58,7 +63,7 @@ npm install --save-dev node-sass
     }
     >.h-tab{
       text-align: center;
-      >i.active{
+      >a.active{
         color: #ccafaf;
       }
     }

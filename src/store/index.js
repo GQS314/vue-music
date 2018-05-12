@@ -2,7 +2,7 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex';
-import MeunList from './modules/meunlist'
+import MenuList from './modules/menulist'
 import MyMusicList from './modules/mymusiclist'
 import Discovering from './modules/discovering'
 import Listening from './modules/listening'
@@ -23,7 +23,7 @@ export default new Vuex.Store({
   
   },
   modules: {
-    meunlist: MeunList,
+    menulist: MenuList,
     myMusicList: MyMusicList,
     discovering: Discovering,
     listening: Listening

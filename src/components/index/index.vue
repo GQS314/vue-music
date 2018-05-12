@@ -17,9 +17,7 @@
     <transition name="setTab">
       <setting v-show="getIsShow"></setting>
     </transition>
-    <transition name="listenTab">
-      <listening v-show="listenIsShow"></listening>
-    </transition>
+    <listening></listening>
   </div>
 </template>
 
@@ -33,9 +31,6 @@
   export default {
     name: "index",
     computed: {
-      ...mapState({
-        listenIsShow: state => state.listening.listenIsShow
-      }),
       ...mapGetters([
         'getIsShow'
       ])
@@ -98,14 +93,14 @@
       animation: listenTab-in .5s;
     }
     .listenTab-leave-active {
-      animation: listenTab-in .5s reverse;
+      animation: listenTab-in .5s ease-in reverse;
     }
     @keyframes listenTab-in {
       0% {
-        transform: translateY(100%);
+        transform: translateX(100%);
       }
       100% {
-        transform: translateY(0);
+        transform: translateX(0);
       }
     }
   }

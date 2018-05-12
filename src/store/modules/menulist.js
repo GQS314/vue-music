@@ -3,7 +3,7 @@
 const SHOW_MENU = true
 const HIDE_MENU = false
 
-const meunlist = {
+const menulist = {
   state: {
     isShow: false,
   },
@@ -28,4 +28,4 @@ const meunlist = {
     }
   }
 }
-export default meunlist
+export default menulist

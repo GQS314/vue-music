@@ -44,7 +44,7 @@ npm install --save-dev node-sass
 -->
 <style lang="scss">
   .h-warpper{
-    background-color: #c62f2f;
+    background-color: $mainColor;
     height: $h-heigth;
     width: 100%;
     @include fixed-point(90);

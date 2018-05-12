@@ -9,7 +9,7 @@
 
 <script>
   export default {
-    name: "meun-list",
+    name: "menu-list",
     props: ['item']
   }
 </script>
@@ -30,7 +30,7 @@
       max-width: 110px;
       font-weight: normal;
       float: right;
-      font-size: 1rem;
+      font-size: 1.2rem;
       color: #888;
       @include text-overflow;
     }

@@ -1,10 +1,10 @@
 <template>
-  <section class="listening">
+  <section :class="['listening', {listeningTab: !listenIsShow}]">
            <!--:style="{ backgroundImage: 'url(' + item.imgUrl + ')' }">-->
     <div class="blurlayer"></div>
     <div class="content">
       <div class="header">
-        <i class="icon icon-right goback"
+        <i class="icon icon-left goback"
            @click="hideListenAction"></i>
         <i class="icon icon-share share"></i>
         <div class="title">
@@ -55,6 +55,9 @@
   export default {
     name: "listening",
     computed: {
+      ...mapState({
+        listenIsShow: state => state.listening.listenIsShow
+      })
     },
     methods: {
       ...mapActions([
@@ -68,14 +71,14 @@
   .listening{
     width: 100%;
     height: 100%;
-    background-color: #333;
-    @include absolute-point(99);
+    background-color: $fontColor;
+    @include fixed-point(96);
     overflow: hidden;
+    transition: all .5s ease-out;
     >.blurlayer{
       width: 100%;
       height: 100%;
-      background: url("../../assets/images/swiper/taylor-swift.jpg") no-repeat center;
-      background-color: rgba(0,0,0,.6);
+      background: rgba(0, 0, 0, .6) url("../../assets/images/swiper/taylor-swift.jpg") no-repeat center;
       background-size: cover;
       transform: scale(1.1);
       filter: blur(10px);
@@ -94,7 +97,6 @@
         .goback{
           @include absolute-point(98, 16px, 12px);
           font-size: 3rem;
-          transform: rotate(180deg);
         }
         .share{
           position: absolute;
@@ -127,10 +129,11 @@
           margin: 0 auto;
           >.triger{
             position: absolute;
-            top: -14px;
-            left: 49%;
+            top: -17px;
+            left: 50%;
             width: 90px;
             height: 140px;
+            transform: translateX(-16px) rotate(-2deg);
             background: url("../../assets/images/playing/swith.png");
             background-size: cover;
             transform-origin: 13px 16px;
@@ -138,14 +141,14 @@
             z-index: 100;
           }
           >.pause{
-            transform: rotate(-30deg);
+            transform: translateX(-16px) rotate(-30deg);
           }
         }
         >.wrapper{
           width: 44vh;
           height: 44vh;
           position: relative;
-          margin: 70px auto 0;
+          margin: 55px auto 0;
           position: relative;
           >.cd-bg{
             width: 100%;
@@ -160,6 +163,20 @@
               background-size: cover;
               border-radius: 50%;
               margin: 18% auto;
+            }
+          }
+          .cd-animation{
+            animation: cd-animation 20s linear infinite;
+          }
+          .cd-animation-stop{
+            animation-play-state:paused;
+          }
+          @keyframes cd-animation {
+            0%{
+              transform: rotate(0);
+            }
+            100%{
+              transform: rotate(360deg);
             }
           }
         }
@@ -233,5 +250,8 @@
         }
       }
     }
+  }
+  .listeningTab{
+    transform: translateX(100%);
   }
 </style>

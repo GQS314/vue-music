@@ -75,7 +75,7 @@
       }
     }
     .music-name{
-      color: #333;
+      color: $fontColor;
     }
     .music-singer{
       color: #aaa;

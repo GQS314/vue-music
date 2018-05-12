@@ -93,7 +93,7 @@
       float: right;
     }
     >span{
-      color: #333;
+      color: $fontColor;
     }
   }
   .playlist{
@@ -118,7 +118,7 @@
         padding-top: 8px;
         >.playtitle{
           font-size: 1.5rem;
-          color: #333;
+          color: $fontColor;
           font-weight: lighter;
         }
         >.playnum{

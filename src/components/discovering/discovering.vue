@@ -16,9 +16,7 @@
 
 <script>
   import DiscoverList from './discover-list'
-  import PlayList from './play-list'
   import DjradioList from './djradio-list'
-  import TopList from './top-list'
   export default {
     name: "discovering",
     data() {
@@ -26,9 +24,7 @@
         currentTab: 0,
         menus: [
           {title: '个性推荐', component: 'discover-list'},
-          {title: '歌单', component: 'play-list'},
-          {title: '主播电台', component: 'djradio-list'},
-          {title: '排行榜', component: 'top-list'}
+          {title: '主播电台', component: 'djradio-list'}
         ]
       }
     },
@@ -39,9 +35,7 @@
     },
     components: {
       DiscoverList,
-      PlayList,
-      DjradioList,
-      TopList
+      DjradioList
     }
   }
 </script>
@@ -68,7 +62,7 @@
           border-bottom: 2px solid #fff;
         }
         >.active{
-          color: #c62f2f;
+          color: $mainColor;
           border-bottom-color: $mainColor;
         }
       }

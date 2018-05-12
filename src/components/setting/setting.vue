@@ -15,7 +15,7 @@
       </header>
       <section class="s-content">
         <ul>
-          <li is="meun-list"
+          <li is="menu-list"
               v-for="(item, index) in meunlist"
               :key="index"
               :item="item"></li>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import MeunList from './meun-list'
+  import MenuList from './menu-list'
   export default {
     name: "setting",
     data() {
@@ -58,7 +58,7 @@
       }
     },
     components: {
-      MeunList
+      MenuList
     }
   }
 </script>
@@ -77,7 +77,7 @@
       padding-bottom: $f-heigth;
       >.s-head{
         height: 170px;
-        background: url("http://www.daiwei.org/index/images/img/indeximg.jpg") no-repeat fixed;
+        background: url("https://gqs314.github.io/demo/images/1441531640728.jpg") no-repeat fixed;
         background-size: 280px 170px;
         position: relative;
         >img{

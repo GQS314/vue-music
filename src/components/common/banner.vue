@@ -7,8 +7,8 @@
            :style="{ backgroundImage: 'url(' + item.imgUrl + ')' }"
            :title="item.title">
         <span class="type"
-              :style="{ backgroundColor: getColor(index).color }">
-          {{ getColor(index).title }}
+              :style="{ backgroundColor: getColor(item.type).color }">
+          {{ getColor(item.type).title }}
         </span>
       </div>
     </div>
@@ -83,13 +83,13 @@
         }
         >.type{
           position: absolute;
-          bottom: 2rem;
+          bottom: 0;
           right: 0;
           z-index: 10;
           color: #eee;
-          border-radius: 12px 0 0 12px;
-          height: 24px;
-          line-height: 24px;
+          border-radius: 8px 0 0 0;
+          height: 22px;
+          line-height: 22px;
           padding: 0 12px;
         }
       }

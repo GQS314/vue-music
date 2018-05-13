@@ -2,7 +2,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 Vue.use(VueResource);
-import { utils } from '../../static/js/utils'
+import { utils } from './../../static/js/utils'
 
 const URL_GET_BAIDU_MUSIC = 'http://tingapi.ting.baidu.com/v1/restserver/ting/?';
 const api = {

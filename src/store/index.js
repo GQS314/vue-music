@@ -11,16 +11,24 @@ import Listening from './modules/listening'
 Vue.use(Vuex);
 export default new Vuex.Store({
   state : {
-  
+    pageCoverIsShow: false
   },
   getters: {
   
   },
   mutations: {
-  
+    showPageCover: state => state.pageCoverIsShow = true,
+    hidePageCover: state => state.pageCoverIsShow = false,
   },
   actions: {
-  
+    showPageCoverAction({ commit }){
+      commit('showPageCover');
+    },
+    hidePageCoverAction({ dispatch, commit }){
+      dispatch('hideMenuAction');
+      dispatch('hidePlayingListAction');
+      commit('hidePageCover');
+    }
   },
   modules: {
     menulist: MenuList,

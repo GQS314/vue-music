@@ -1,38 +1,36 @@
 <template>
   <header class="h-warpper">
     <i class="h-set icon-menu"
-       @click="sttingShow"></i>
-    <i class="h-sec icon-search"></i>
+       @click="showMenuAction"></i>
+    <div :class="['h-play', { 'h-playing': isStart }]"
+         @click="showListenAction">
+      <div class="a"></div>
+      <div class="b"></div>
+      <div class="c"></div>
+      <div class="d"></div>
+    </div>
     <div class="h-tab">
-      <router-link v-for="(meun, index) in meuns"
-                   :to="meun.route"
-                   :key="index"
-                   :class="['icon-'+meun.icon, { active: currentTab === index }]"
-                   @click.native="changTab(index)"></router-link>
+      <i class="h-sec icon-search"></i>
+      <input placeholder="搜出好心情~" type="text">
     </div>
   </header>
 </template>
 
 <script>
+  import { mapState, mapActions } from 'vuex'
   export default {
     name: "tabhead",
-    data() {
-      return {
-        currentTab : 1,
-        meuns: [
-          {icon: 'music', route: '/mymusic'},
-          {icon: 'wangyi', route: '/discovering'},
-          {icon: 'community', route: '/friend'}
-        ]
-      }
+    computed: {
+      ...mapState({
+        isShow: state => state.menulist.isShow,
+        isStart: state => state.listening.isStart
+      })
     },
     methods: {
-      sttingShow() {
-        this.$emit('sttingShow');
-      },
-      changTab(index) {
-        this.currentTab = index;
-      }
+      ...mapActions([
+        'showMenuAction',
+        'showListenAction'
+      ])
     }
   }
 </script>
@@ -50,21 +48,62 @@ npm install --save-dev node-sass
     @include fixed-point(90);
     >.h-set{
       float: left;
-    }
-    >.h-sec{
-      float: right;
-    }
-    i,a{
       color: #eee;
       font-size: 2.5rem;
       line-height: $h-heigth;
       padding: 0 15px;
       cursor: pointer;
     }
+    >.h-play{
+      cursor: pointer;
+      float: right;
+      width: 50px;
+      height: 40px;
+      padding: 10px 15px 10px;
+      transform: rotate(180deg);
+      >div{
+        float: left;
+        margin: 0 3px 0 0;
+        width: 2px;
+        background: #eaeaea;
+      }
+      >.a{
+        height: 80%;
+      }
+      >.b{
+        height: 50%;
+      }
+      >.c{
+        height: 100%;
+      }
+      >.d{
+        height: 60%;
+      }
+    }
+    >.h-playing{
+      >.a{@include playing(aa, 80%)}
+      >.b{@include playing(bb, 50%)}
+      >.c{@include playing(cc, 100%)}
+      >.d{@include playing(dd, 60%)}
+    }
     >.h-tab{
-      text-align: center;
-      >a.active{
-        color: #ccafaf;
+      color: #999;
+      position: relative;
+      width: 200px;
+      margin: 0 auto;
+      >i{
+        @include absolute-point(90, 9px, 6px);
+        font-size: 2rem;
+      }
+      >input{
+        border: 0;
+        border-radius: 20px;
+        width: 200px;
+        height: 26px;
+        line-height: 28px;
+        padding: 1px 10px 1px 30px;
+        margin: 7px auto 0;
+        outline:none;
       }
     }
   }

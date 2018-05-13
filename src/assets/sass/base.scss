@@ -1,5 +1,5 @@
-@import "reset";
-@import '../../../static/font-icon/style.css';
+@import "./reset";
+@import "./../../../static/font-icon/style.css";
 *{
   user-select:none;
 }
@@ -18,8 +18,8 @@ $mainColor: #c62f2f;
 $fontColor: #333;
 $lineColor: #eaeaea;
 
-$h-heigth:50px;
-$f-heigth:45px;
+$h-heigth:40px;
+$f-heigth:40px;
 
 @mixin active-bg{
   &:active{
@@ -76,7 +76,7 @@ $f-heigth:45px;
     -webkit-backdrop-filter: blur($px);
     backdrop-filter: blur($px);
   }
-  
+
   // 若浏览器器不支持，则使用 MaterialDesign 的风格
   @supports not ((-webkit-backdrop-filter: blur($px)) or (backdrop-filter: blur($px))) {
     &:before{
@@ -88,6 +88,25 @@ $f-heigth:45px;
       bottom:0;
       z-index: -1;
       background: rgba(0,0,0,0.6);
+    }
+  }
+}
+
+@mixin playing($name,$start){
+  animation: $name .8s linear infinite;
+  @keyframes #{$name} {
+    0%{
+      height: $start;
+    }
+    50%{
+      @if($start < 80){
+        height: ($start + 40);
+      }@else {
+        height: ($start - 60);
+      }
+    }
+    100%{
+      height: $start;
     }
   }
 }

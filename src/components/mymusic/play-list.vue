@@ -113,6 +113,7 @@
         height: 50px;
         float: left;
         background-size: cover;
+        border-radius: 5px;
       }
       >.playInfo{
         padding-top: 8px;

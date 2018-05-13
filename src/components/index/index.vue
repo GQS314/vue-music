@@ -1,9 +1,6 @@
 <template>
   <div class="container">
-    <tabhead @sttingShow="showMenuAction"></tabhead>
-    <!--<keep-alive>-->
-      <!--<router-view></router-view>-->
-    <!--</keep-alive>-->
+    <tabhead></tabhead>
     <index-content>
       <keep-alive>
         <router-view></router-view>
@@ -11,13 +8,14 @@
     </index-content>
     <tabfoot></tabfoot>
     <transition name="coverTab">
-      <div v-show="getIsShow" class="page-cover"
-           @click="hideMenuAction"></div>
+      <div v-show="pageCoverIsShow" class="page-cover"
+           @click="hidePageCoverAction"></div>
     </transition>
     <transition name="setTab">
-      <setting v-show="getIsShow"></setting>
+      <setting v-show="isShow"></setting>
     </transition>
     <listening></listening>
+    <playing-list></playing-list>
   </div>
 </template>
 
@@ -27,18 +25,19 @@
   import listening from '../listening/listening'
   import setting from '../setting/setting'
   import indexContent from './index-content'
-  import { mapState, mapGetters, mapActions } from 'vuex'
+  import PlayingList from './../listening/playing-list'
+  import { mapState, mapActions } from 'vuex'
   export default {
     name: "index",
     computed: {
-      ...mapGetters([
-        'getIsShow'
-      ])
+      ...mapState({
+        isShow: state => state.menulist.isShow,
+        pageCoverIsShow: 'pageCoverIsShow'
+      })
     },
     methods: {
       ...mapActions([
-        'showMenuAction',
-        'hideMenuAction'
+        'hidePageCoverAction'
       ])
     },
     components: {
@@ -46,7 +45,8 @@
       tabfoot,
       listening,
       setting,
-      indexContent
+      indexContent,
+      PlayingList
     }
   }
 </script>
@@ -59,7 +59,7 @@
     padding: $h-heigth 0 $f-heigth;
     >.page-cover{
       @include cover(0.6);
-      @include fixed-point(92);
+      @include fixed-point(100);
       &.coverTab-enter-active {
         animation: coverTab-in .5s;
       }

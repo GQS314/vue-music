@@ -41,6 +41,30 @@ export const utils = {
 			}
 		})
 	},
+  getRandom(arr, min, max){
+    if(arr.length < max){
+      let index = 0;
+      let difference = max - min;
+      let ok = true;
+      while (ok){
+        index = Math.random()*difference + min;
+        index = parseInt(index);
+        let check = true;
+        for(let i = 0; i < arr.length; i++){
+          if(index == arr[i]){
+            check = false;
+            break;
+          }
+        }
+        if(check){
+          ok = false;
+        }
+      }
+      return index;
+    }else {
+      return 0;
+    }
+  },
 
 	// 从数组中获取num 个随机不重复的元素
 	// arr 需要取出的数组

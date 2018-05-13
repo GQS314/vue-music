@@ -67,7 +67,7 @@
   .setting{
     min-height: 100%;
     background-color: #fff;
-    @include absolute-point(99);
+    @include absolute-point(101);
     overflow: hidden scroll;
     &::-webkit-scrollbar {
       display: none;
@@ -84,10 +84,10 @@
           width: 56px;
           height: 56px;
           border-radius: 50%;
-          @include absolute-point(99,60px,18px);
+          @include absolute-point(101,60px,18px);
         }
         >.s-info{
-          @include absolute-point(99,133px,18px);
+          @include absolute-point(101,133px,18px);
           line-height: 1.7rem;
           >img{
             width: 15px;
@@ -112,7 +112,7 @@
           }
         }
         >.s-sign{
-          @include absolute-point(99,130px,200px);
+          @include absolute-point(101,130px,200px);
           border: 1px solid #eee;
           border-radius: 12px;
           color: #eee;

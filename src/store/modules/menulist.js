@@ -20,10 +20,11 @@ const menulist = {
   }
   ,
   actions: {
-    showMenuAction({ commit }) {
+    showMenuAction({ dispatch, commit }) {
+      dispatch('showPageCoverAction');
       commit('showMenu');
     },
-    hideMenuAction({ commit }) {
+    hideMenuAction({ dispatch, commit }) {
       commit('hideMenu');
     }
   }

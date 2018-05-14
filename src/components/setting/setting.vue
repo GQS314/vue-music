@@ -1,5 +1,5 @@
 <template>
-  <section class="setting">
+  <section :class="['setting', { isShow: !isShow }]">
     <div class="s-main">
       <header class="s-head">
         <img title="头像" src="http://p2.music.126.net/5DBXLU9hhfXg6j9ZTM_mBg==/3368903628505666.jpg?param=180y180" alt="userImg">
@@ -39,8 +39,14 @@
 
 <script>
   import MenuList from './menu-list'
+  import { mapState } from 'vuex'
   export default {
     name: "setting",
+    computed: {
+      ...mapState({
+        isShow: state => state.menulist.isShow
+      })
+    },
     data() {
       return {
         meunlist: [
@@ -75,6 +81,7 @@
     &::-webkit-scrollbar {
       display: none;
     }
+    @include isShow(X, -280px);
     >.s-main{
       width: 280px;
       padding-bottom: $f-heigth;

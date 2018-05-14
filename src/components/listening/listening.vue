@@ -1,5 +1,5 @@
 <template>
-  <section :class="['listening', {listeningTab: !listenIsShow}]"
+  <section :class="['listening', {isShow: !listenIsShow}]"
            @touchmove="dontTouchDrag($event)">
            <!--:style="{ backgroundImage: 'url(' + item.imgUrl + ')' }">-->
     <audio class="audio"
@@ -22,9 +22,12 @@
           <div :class="['triger', { pause: !isStart }]"></div>
         </div>
         <div class="wrapper">
-          <div :class="['cd-bg', 'cd-animation', { 'cd-animation-stop': !isStart }]">
-            <div class="img-bg"
-                 :style="{ backgroundImage: 'url(' + playing.imgUrl + ')' }"></div>
+          <div class="cd-bg-animation" ref="cdBgAnimation">
+            <div class="cd-bg"
+                 ref="singerImg">
+              <div class="img-bg"
+                   :style="{ backgroundImage: 'url(' + playing.imgUrl + ')' }"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -79,6 +82,7 @@
         ControllerWidth: 0,
         bufferController: '',
         bufferPercentWidth: 0,
+        bgImgRotate: '',
         loopModel: [
           { type: 0, icon: 'icon-music-shunxu', tip: '列表循环'},
           { type: 1, icon: 'icon-music-danqu1', tip: '单曲循环'},
@@ -171,18 +175,27 @@
       },
       //开始播放
       startPlay() {
+        this.$refs.singerImg.classList.add('cd-animation');
         this.$refs.audio.autoplay = 'autoplay';
         this.getLenght();
         this.startListenAction();
         const playPromise = this.$refs.audio.play();
         if (playPromise !== null){
-          playPromise.catch(() => { this.$refs.audio.play(); })
+          playPromise.catch(() => {
+            this.$refs.audio.play();
+          })
         }
         this.bufferController = setInterval(this.setbufferPercent, 50);
         this.Controller = setInterval(this.setTime, 50);
       },
       //暂停播放
       stopPlay() {
+        let cdRotate = getComputedStyle(this.$refs.singerImg).transform;
+        let imgRotate = getComputedStyle(this.$refs.cdBgAnimation).transform;
+        this.$refs.cdBgAnimation.style.transform = imgRotate === 'none'
+          ? cdRotate
+          : cdRotate.concat(' ', imgRotate);
+        this.$refs.singerImg.classList.remove('cd-animation');
         clearInterval(this.Controller);
         this.stopListenAction();
         this.$refs.audio.pause();
@@ -303,40 +316,48 @@
           id: 0,
           name: 'You Belong With Me',
           singer: 'Taylor Swift',
-          url: '/static/mp3/taylor%20swift%20-%20you%20belong%20with%20me.mp3',
+          url: 'http://mp3.qqmusic.cc/yq/639144.mp3',
           imgUrl: 'https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike180%2C5%2C5%2C180%2C60/sign=1cb22fbd9413b07ea9b0585a6dbefa46/e4dde71190ef76c640af53b79a16fdfaaf516729.jpg',
           lrc: ''
         },
         {
           id: 1,
-          name: '红色高跟鞋',
-          singer: '蔡健雅',
-          url: '/static/mp3/蔡健雅%20-%20红色高跟鞋.mp3',
-          imgUrl: 'http://p1.music.126.net/2toWuH2oD6c0dM6QLdThzg==/109951163165824418.jpg?param=130y130',
+          name: '远走高飞 (合唱版)',
+          singer: '金志文、徐佳莹',
+          url: 'http://sc1.111ttt.cn/2017/1/05/09/298092036393.mp3',
+          imgUrl: 'http://p1.music.126.net/elfqBKIdad0KYCCeKQpDSA==/18700493767108166.jpg?param=130y130',
           lrc: ''
         },
         {
           id: 2,
-          name: '忽如远行客',
-          singer: '云の泣',
-          url: '/static/mp3/云の泣%20-%20忽如远行客.mp3',
-          imgUrl: 'http://p1.music.126.net/tHAfnugCElS93EDp5cHLIw==/8909342719897560.jpg?param=130y130',
+          name: '红昭愿',
+          singer: '音阙诗听',
+          url: 'http://mp3.qqmusic.cc/yq/213370857.mp3',
+          imgUrl: 'http://p1.music.126.net/8ltR3o9R8uJ9_5Cc71cDhA==/109951162951242154.jpg?param=130y130',
           lrc: ''
         },
         {
           id: 3,
-          name: '龙卷风',
-          singer: 'G.E.M.邓紫棋',
-          url: '/static/mp3/G.E.M.邓紫棋%20-%20龙卷风.mp3',
-          imgUrl: 'http://p1.music.126.net/UjLNuIBU47XdHd24e3U21w==/6631154627821015.jpg?param=130y130',
+          name: '我们不一样',
+          singer: '大壮',
+          url: 'http://sc1.111ttt.cn/2017/1/11/11/304112002493.mp3',
+          imgUrl: 'http://p1.music.126.net/e8rrwkOED4RbeaKuaVOcJA==/18997361904874206.jpg?param=130y130',
           lrc: ''
         },
         {
           id: 4,
-          name: 'Purple Passion',
-          singer: 'Diana Boncheva',
-          url: '/static/mp3/Diana%20Boncheva%20-%20Purple%20Passion.mp3',
-          imgUrl: 'http://p1.music.126.net/_LSagRKhZzUsjSy5fIAMsg==/923589767384661.jpg?param=130y130',
+          name: '感谢你曾来过',
+          singer: 'Ayo97/阿涵',
+          url: 'http://mp3.qqmusic.cc/yq/205137019.mp3',
+          imgUrl: 'http://p1.music.126.net/iL36G-e6rm2zwCUmlL4pOw==/109951162859100521.jpg?param=130y130',
+          lrc: ''
+        },
+        {
+          id: 5,
+          name: '凉城',
+          singer: '任然',
+          url: 'http://mp3.qqmusic.cc/yq/109391881.mp3',
+          imgUrl: 'http://p1.music.126.net/9RQepityGQUfi5Rbcz7xCQ==/18747772766555079.jpg?param=130y130',
           lrc: ''
         }
       ];
@@ -356,7 +377,7 @@
     background-color: $fontColor;
     @include fixed-point(96);
     overflow: hidden;
-    transition: all .5s ease-out;
+    @include isShow(X, 100%, .5s, ease-out);
     >.audio{
       visibility: hidden;
     }
@@ -435,33 +456,36 @@
           position: relative;
           margin: 55px auto 0;
           position: relative;
-          >.cd-bg{
-            display: block;
+          >.cd-bg-animation{
             width: 100%;
             height: 100%;
             @include absolute-point(98);
-            background: url('./../../assets/images/playing/cd-mine.png') no-repeat;
-            background-size: cover;
-            >.img-bg{
-              width: 64%;
-              height: 64%;
-              background: no-repeat center;
+            >.cd-bg{
+              width: 100%;
+              height: 100%;
+              background: url('./../../assets/images/playing/cd-mine.png') no-repeat;
               background-size: cover;
-              border-radius: 50%;
-              margin: 18% auto;
-            }
-            &.cd-animation{
-              animation: cd-animation 20s linear infinite;
-            }
-            &.cd-animation-stop{
-              animation-play-state: paused;
-            }
-            @keyframes cd-animation {
-              0%{
-                transform: rotate(0);
+              overflow: hidden;
+              >.img-bg{
+                width: 64%;
+                height: 64%;
+                background: no-repeat center;
+                background-size: cover;
+                border-radius: 50%;
+                margin: 18% auto;
               }
-              100%{
-                transform: rotate(360deg);
+              &.cd-animation{
+                animation: cd-animation 20s linear infinite;
+              }
+              &.cd-animation-stop{
+                -webkit-animation-play-state: paused;
+                -moz-animation-play-state: paused;
+                animation-play-state: paused;
+              }
+              @keyframes cd-animation {
+                100%{
+                  transform: rotate(1turn);
+                }
               }
             }
           }
@@ -544,8 +568,5 @@
         }
       }
     }
-  }
-  .listeningTab{
-    transform: translateX(100%);
   }
 </style>

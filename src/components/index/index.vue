@@ -12,9 +12,7 @@
            @click="hidePageCoverAction"
            @touchmove="dontTouchDrag($event)"></div>
     </transition>
-    <transition name="setTab">
-      <setting v-show="isShow"></setting>
-    </transition>
+    <setting></setting>
     <listening></listening>
     <playing-list></playing-list>
   </div>
@@ -32,9 +30,7 @@
     name: "index",
     computed: {
       ...mapState({
-        isShow: state => state.menulist.isShow,
-        pageCoverIsShow: 'pageCoverIsShow',
-        listenIsShow: state => state.listening.listenIsShow
+        pageCoverIsShow: 'pageCoverIsShow'
       })
     },
     methods: {
@@ -78,34 +74,6 @@
         100% {
           opacity: .6;
         }
-      }
-    }
-    .setTab-enter-active {
-      animation: setTab-in .5s;
-    }
-    .setTab-leave-active {
-      animation: setTab-in .5s reverse;
-    }
-    @keyframes setTab-in {
-      0% {
-        transform: translateX(-280px);
-      }
-      100% {
-        transform: translateX(0);
-      }
-    }
-    .listenTab-enter-active {
-      animation: listenTab-in .5s;
-    }
-    .listenTab-leave-active {
-      animation: listenTab-in .5s ease-in reverse;
-    }
-    @keyframes listenTab-in {
-      0% {
-        transform: translateX(100%);
-      }
-      100% {
-        transform: translateX(0);
       }
     }
   }

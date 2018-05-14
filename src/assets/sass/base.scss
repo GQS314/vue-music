@@ -52,6 +52,15 @@ $f-heigth:40px;
   word-wrap: break-word;
 }
 
+// 展示隐藏动画
+@mixin isShow($translate, $lenght, $time:.5s, $ease:ease){
+  $tl: translate + $translate;
+  transition: transform $time $ease;
+  &.isShow{
+    transform: $tl+'('+$lenght+')';
+  }
+}
+
 // 绝对定位
 @mixin absolute-point($zindex, $top:0, $left:0){
   position: absolute;

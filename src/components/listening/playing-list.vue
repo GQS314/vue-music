@@ -1,5 +1,5 @@
 <template>
-	<section :class="['playing-list', { hide : !playingListIsShow }]">
+	<section :class="['playing-list', { isShow : !playingListIsShow }]">
     <div class="title">
       <div class="left">
         歌曲列表（{{ songList.length }}）
@@ -21,6 +21,9 @@
         </p>
       </li>
     </ul>
+    <div class="closelist" @click="hidePageCoverAction">
+      关闭
+    </div>
   </section>
 </template>
 
@@ -37,7 +40,7 @@
     },
     methods: {
       ...mapActions([
-        'hidePlayingListAction',
+        'hidePageCoverAction',
         'updatePlayingAction',
         'updatePlayingIndexAction'
       ]),
@@ -53,10 +56,13 @@
  .playing-list{
    @include fixed-point(101,bottom);
    width: 100%;
-   height: 65vh;
+   max-height: 65vh;
+   min-height: 45vh;
    transition: all .5s ease-in-out;
    background: rgba(255,255,255,.9);
    border-radius: 10px 10px 0 0;
+   padding-bottom: 44px;
+   @include isShow(Y, 110%, .5s, ease-out);
    >.title{
      height: 40px;
      line-height: 40px;
@@ -108,8 +114,14 @@
        }
      }
    }
+   >.closelist{
+     @include fixed-point(101, bottom);
+     right: 0;
+     text-align: center;
+     height: 45px;
+     line-height: 45px;
+     background: rgba(249, 249, 249, 0.8);
+     border-top: 1px solid #d6d6d6;
+   }
  }
-  .hide{
-    transform: translateY(110%);
-  }
 </style>

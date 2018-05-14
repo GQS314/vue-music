@@ -39,7 +39,7 @@
     @include fixed-point(90, bottom);
     display: flex;
     border-top: 1px solid $lineColor;
-    background: rgba(255,255,255,.8);
+    background: rgba(255,255,255,0.95);
     >a{
       display: block;
       flex: 1;

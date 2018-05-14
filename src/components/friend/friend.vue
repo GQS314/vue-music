@@ -106,6 +106,7 @@
   .friend{
     position: relative;
     padding-top: 40px;
+    padding-bottom: $f-heigth;
     >.tabbar{
       position: fixed;
       z-index: 20;

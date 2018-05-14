@@ -53,6 +53,9 @@
           { icon: 'set-time', title: '定时播放', tip: '', next: 1 },
           { icon: 'lock', title: '音乐闹钟', tip: '', next: 1 },
           { icon: 'car', title: '驾驶模式', tip: '', next: 1 },
+          { icon: 'cloud', title: '音乐云盘', tip: '', next: 1 },
+          { icon: 'cloud', title: '音乐云盘', tip: '', next: 1 },
+          { icon: 'cloud', title: '音乐云盘', tip: '', next: 1 },
           { icon: 'cloud', title: '音乐云盘', tip: '', next: 1 }
         ]
       }
@@ -65,10 +68,10 @@
 
 <style lang="scss" scoped>
   .setting{
-    min-height: 100%;
     background-color: #fff;
-    @include absolute-point(101);
-    overflow: hidden scroll;
+    @include fixed-point(101);
+    bottom: 0;
+    overflow: auto;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -77,7 +80,7 @@
       padding-bottom: $f-heigth;
       >.s-head{
         height: 170px;
-        background: url("https://gqs314.github.io/demo/images/1441531640728.jpg") no-repeat fixed;
+        background: url("http://img2.3lian.com/2014/f3/78/d/97.jpg") no-repeat;
         background-size: 280px 170px;
         position: relative;
         >img{
@@ -125,7 +128,7 @@
         }
       }
       >.s-foot{
-        @include fixed-point(100, bottom);
+        @include fixed-point(102, bottom);
         width: 280px;
         border-top: 1px solid rgba(7,17,27,.1);
         background-color: #fff;

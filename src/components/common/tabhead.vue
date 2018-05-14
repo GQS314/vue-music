@@ -11,7 +11,7 @@
     </div>
     <div class="h-tab">
       <i class="h-sec icon-search"></i>
-      <input placeholder="搜出好心情~" type="text">
+      <input type="search" results="10" placeholder="搜出好心情~">
     </div>
   </header>
 </template>
@@ -100,10 +100,13 @@ npm install --save-dev node-sass
         border-radius: 20px;
         width: 200px;
         height: 26px;
-        line-height: 28px;
+        line-height: 20px;
         padding: 1px 10px 1px 30px;
         margin: 7px auto 0;
         outline:none;
+        user-select: auto;
+        -moz-user-select: auto;
+        -webkit-user-select: auto
       }
     }
   }

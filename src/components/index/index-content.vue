@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   export default {
     name: "index-content"
   }
@@ -14,7 +15,5 @@
   .index-content{
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
   }
 </style>

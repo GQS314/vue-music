@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="mymusic">
     <meun-list :items="getMyMusic"></meun-list>
     <play-list v-for="(item, index) in playList"
                :key="index"
@@ -103,5 +103,7 @@
 </script>
 
 <style lang="scss" scoped>
-
+  .mymusic{
+    padding-bottom: $f-heigth;
+  }
 </style>

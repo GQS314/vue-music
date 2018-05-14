@@ -1,5 +1,6 @@
 <template>
-  <section :class="['listening', {listeningTab: !listenIsShow}]">
+  <section :class="['listening', {listeningTab: !listenIsShow}]"
+           @touchmove="dontTouchDrag($event)">
            <!--:style="{ backgroundImage: 'url(' + item.imgUrl + ')' }">-->
     <audio class="audio"
            :src="playing.url"
@@ -37,12 +38,14 @@
         <div class="progressbar">
           <span class="span-left">{{ songTime(currentTime) }}</span>
           <div class="progress">
+            <span class="bufferPercent"
+                  :style="{ width: bufferPercentWidth + '%' }"></span>
             <span class="currentProgress"
-                  :style="{ width: ControllerWidth }"></span>
+                  :style="{ width: ControllerWidth + '%' }"></span>
             <span class="ball"
-                  @mousedown="mouseDrag($event)"
-                  @touchstart="touchDrag($event)"
-                  :style="{ left: ControllerWidth }"></span>
+                  @mousedown.prevent="mouseDrag($event)"
+                  @touchstart.prevent="touchDrag($event)"
+                  :style="{ left: ControllerWidth + '%' }"></span>
           </div>
           <span class="span-right">{{ songTime(duration) }}</span>
         </div>
@@ -74,6 +77,8 @@
         currentTime: '',
         Controller: '',
         ControllerWidth: 0,
+        bufferController: '',
+        bufferPercentWidth: 0,
         loopModel: [
           { type: 0, icon: 'icon-music-shunxu', tip: '列表循环'},
           { type: 1, icon: 'icon-music-danqu1', tip: '单曲循环'},
@@ -92,6 +97,9 @@
       }),
       getModel() {
         return this.loopModel[this.loop].icon;
+      },
+      getBufferPercentWidth() {
+        return this.bufferPercentWidth >= 100 ? 100 : this.bufferPercentWidth;
       }
     },
     methods: {
@@ -105,6 +113,7 @@
         'updatePlayingIndexAction',
         'showPlayingListAction'
       ]),
+      //将歌曲长度/播放长度 转换为具体时间
       songTime(time){
         if(time){
           let minute = parseInt(time/60);
@@ -116,6 +125,7 @@
           return '00:00';
         }
       },
+      //处理任意循环模式下，获取下一首歌曲
       getPlayingIndex(type) {
         switch (type){
           case 'next':
@@ -141,14 +151,25 @@
             this.loopList.push(index);
         }
       },
+      //获取歌曲总长度
       getLenght() {
         this.duration = this.$refs.audio.duration;
       },
+      //持续获取缓存进度
+      setbufferPercent(){
+        let timeRanges = this.$refs.audio.buffered;
+        if(timeRanges.length != 0){
+          let timeBuffered = timeRanges.end(timeRanges.length - 1);
+          this.bufferPercentWidth = parseFloat(timeBuffered / this.duration) * 100;
+        }
+      },
+      //持续获取播放进度
       setTime() {
         this.currentTime = this.$refs.audio.currentTime;
-        this.ControllerWidth = parseFloat(this.currentTime / this.duration) * 100 + '%';
+        this.ControllerWidth = parseFloat(this.currentTime / this.duration) * 100;
         this.getLenght();
       },
+      //开始播放
       startPlay() {
         this.$refs.audio.autoplay = 'autoplay';
         this.getLenght();
@@ -157,20 +178,25 @@
         if (playPromise !== null){
           playPromise.catch(() => { this.$refs.audio.play(); })
         }
-        //this.$refs.audio.play();
+        this.bufferController = setInterval(this.setbufferPercent, 50);
         this.Controller = setInterval(this.setTime, 50);
       },
+      //暂停播放
       stopPlay() {
         clearInterval(this.Controller);
         this.stopListenAction();
         this.$refs.audio.pause();
       },
+      //切歌时清理一切
       clearAll() {
+        clearInterval(this.bufferController);
         this.stopPlay();
         this.duration = 0;
         this.currentTime = 0;
         this.ControllerWidth = 0;
+        this.bufferPercentWidth = 0;
       },
+      //获取下一首歌，并开始播放
       switchPlaying(type) {
         this.clearAll();
         if(this.loop == 0){
@@ -179,9 +205,9 @@
           this.getPlayingIndex('random');
         }
         this.updatePlayingAction(this.songList[this.playingIndex]);
-        this.$refs.audio.load();
         this.startPlay();
       },
+      //设置循环模式
       setModel() {
         let num = this.loopModel.length;
         if(this.loop == num - 1){
@@ -190,6 +216,7 @@
           this.loop += 1;
         }
       },
+      //开始/停止 按钮
       audioController() {
         if(this.isStart){
           this.stopPlay();
@@ -197,6 +224,7 @@
           this.startPlay();
         }
       },
+      //鼠标拖拽进度条事件
       mouseDrag(el) {
         var disX = 0,
           parent = el.currentTarget.parentNode,
@@ -206,9 +234,9 @@
         disX = el.clientX;
         document.onmousemove=(e)=>{
           clearInterval(this.Controller);
-          ratio = (e.clientX - disX) / w + oldleft;
+          ratio = parseFloat((e.clientX - disX) / w + oldleft);
           this.currentTime = ratio;
-          this.ControllerWidth = ratio * 100 + '%';
+          this.ControllerWidth = ratio * 100;
         }
         document.onmouseup=(e)=>{
           if(!this.duration){
@@ -221,6 +249,7 @@
           document.onmouseup=null;
         };
       },
+      //移动端拖拽进度条事件
       touchDrag(el) {
         var disX = 0,
           parent = el.currentTarget.parentNode,
@@ -230,9 +259,9 @@
         disX = el.changedTouches[0].pageX
         document.ontouchmove=(e)=>{
           clearInterval(this.Controller);
-          ratio = (e.changedTouches[0].pageX - disX) / w + oldleft;
+          ratio = parseFloat((e.changedTouches[0].pageX - disX) / w + oldleft);
           this.currentTime = ratio;
-          this.ControllerWidth = ratio * 100 + '%';
+          this.ControllerWidth = ratio * 100;
         }
         document.ontouchend=(e)=>{
           if(!this.duration){
@@ -244,18 +273,28 @@
           document.ontouchmove=null;
           document.ontouchend=null;
         };
+      },
+      dontTouchDrag(e) {
+        e.preventDefault();
       }
     },
     watch: {
       ControllerWidth: function (newValue, oldValue) {
-        if(newValue == '100%'){
+        if(newValue >= 100){
+          this.ControllerWidth = '100%';
           this.switchPlaying('next');
         }
       },
-      playing: function(n,o) {
-        this.clearAll();
-        this.$refs.audio.load();
-        this.startPlay();
+      bufferPercentWidth: function (n) {
+        if(n == '100%'){
+          clearInterval(this.bufferController);
+        }
+      },
+      playingIndex: function(n,o) {
+        // this.clearAll();
+        // this.updatePlayingAction(this.songList[this.playingIndex]);
+        // this.$refs.audio.load();
+        // this.startPlay();
       }
     },
     mounted() {
@@ -264,7 +303,7 @@
           id: 0,
           name: 'You Belong With Me',
           singer: 'Taylor Swift',
-          url: './../../../static/mp3/taylor%20swift%20-%20you%20belong%20with%20me.mp3',
+          url: '/static/mp3/taylor%20swift%20-%20you%20belong%20with%20me.mp3',
           imgUrl: 'https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike180%2C5%2C5%2C180%2C60/sign=1cb22fbd9413b07ea9b0585a6dbefa46/e4dde71190ef76c640af53b79a16fdfaaf516729.jpg',
           lrc: ''
         },
@@ -272,7 +311,7 @@
           id: 1,
           name: '红色高跟鞋',
           singer: '蔡健雅',
-          url: './../../../static/mp3/蔡健雅%20-%20红色高跟鞋.mp3',
+          url: '/static/mp3/蔡健雅%20-%20红色高跟鞋.mp3',
           imgUrl: 'http://p1.music.126.net/2toWuH2oD6c0dM6QLdThzg==/109951163165824418.jpg?param=130y130',
           lrc: ''
         },
@@ -280,7 +319,7 @@
           id: 2,
           name: '忽如远行客',
           singer: '云の泣',
-          url: './../../../static/mp3/云の泣%20-%20忽如远行客.mp3',
+          url: '/static/mp3/云の泣%20-%20忽如远行客.mp3',
           imgUrl: 'http://p1.music.126.net/tHAfnugCElS93EDp5cHLIw==/8909342719897560.jpg?param=130y130',
           lrc: ''
         },
@@ -288,7 +327,7 @@
           id: 3,
           name: '龙卷风',
           singer: 'G.E.M.邓紫棋',
-          url: './../../../static/mp3/G.E.M.邓紫棋%20-%20龙卷风.mp3',
+          url: '/static/mp3/G.E.M.邓紫棋%20-%20龙卷风.mp3',
           imgUrl: 'http://p1.music.126.net/UjLNuIBU47XdHd24e3U21w==/6631154627821015.jpg?param=130y130',
           lrc: ''
         },
@@ -296,7 +335,7 @@
           id: 4,
           name: 'Purple Passion',
           singer: 'Diana Boncheva',
-          url: './../../../static/mp3/Diana%20Boncheva%20-%20Purple%20Passion.mp3',
+          url: '/static/mp3/Diana%20Boncheva%20-%20Purple%20Passion.mp3',
           imgUrl: 'http://p1.music.126.net/_LSagRKhZzUsjSy5fIAMsg==/923589767384661.jpg?param=130y130',
           lrc: ''
         }
@@ -351,7 +390,7 @@
           margin: 12px 14px 0;
         }
         .title{
-          padding-top: 40px;
+          padding-top: 3vh;
           text-align: center;
           line-height: 28px;
           .name{
@@ -362,7 +401,7 @@
         }
       }
       >.cd{
-        margin-top: 100px;
+        margin-top: 12vh;
         overflow: hidden;
         position: relative;
         display: block;
@@ -380,7 +419,7 @@
             width: 90px;
             height: 140px;
             transform: translateX(-16px) rotate(-2deg);
-            background: url(./../../assets/images/playing/swith.png) no-repeat;
+            background: url('./../../assets/images/playing/swith.png') no-repeat;
             background-size: cover;
             transform-origin: 13px 16px;
             transition: all .3s;
@@ -397,32 +436,33 @@
           margin: 55px auto 0;
           position: relative;
           >.cd-bg{
+            display: block;
             width: 100%;
             height: 100%;
             @include absolute-point(98);
-            background: url(./../../assets/images/playing/cd-mine.png) no-repeat;
+            background: url('./../../assets/images/playing/cd-mine.png') no-repeat;
             background-size: cover;
             >.img-bg{
               width: 64%;
               height: 64%;
-              background: url(./../../assets/images/swiper/taylor-swift.jpg) no-repeat center;
+              background: no-repeat center;
               background-size: cover;
               border-radius: 50%;
               margin: 18% auto;
             }
-          }
-          .cd-animation{
-            animation: cd-animation 20s linear infinite;
-          }
-          .cd-animation-stop{
-            animation-play-state:paused;
-          }
-          @keyframes cd-animation {
-            0%{
-              transform: rotate(0);
+            &.cd-animation{
+              animation: cd-animation 20s linear infinite;
             }
-            100%{
-              transform: rotate(360deg);
+            &.cd-animation-stop{
+              animation-play-state: paused;
+            }
+            @keyframes cd-animation {
+              0%{
+                transform: rotate(0);
+              }
+              100%{
+                transform: rotate(360deg);
+              }
             }
           }
         }
@@ -432,15 +472,15 @@
         width: 100%;
         >.dosomething{
           width: 70vw;
-          height: 40px;
-          margin: 0 auto 3vh;
+          height: 34px;
+          margin: 0 auto 2vh;
           display: flex;
           align-items: center;
           justify-content: space-around;
           text-align: center;
           >i{
-            width: 40px;
-            height: 40px;
+            width: 34px;
+            height: 34px;
             line-height: 40px;
             color: #eee;
             font-size: 2.5rem;
@@ -448,7 +488,7 @@
         }
         >.progressbar{
           width: 90%;
-          height: 40px;
+          height: 34px;
           margin: 0 auto 0;
           text-align: center;
           align-items: center;
@@ -460,14 +500,20 @@
             margin: 0 12px;
             flex: 1;
             height: 2px;
-            background: #eee;
+            background: rgba(0,0,0,.5);
             position: relative;
             border-radius: 1px;
+            >.bufferPercent{
+              height: 2px;
+              width: 0;
+              background-color: #eee;
+              @include absolute-point(98);
+            }
             >.currentProgress{
               height: 2px;
               width: 0;
               background-color: $mainColor;
-              @include absolute-point(98);
+              @include absolute-point(99);
             }
             >.ball{
               width: 16px;
@@ -475,14 +521,14 @@
               background-color: #eee;
               border-radius: 50%;
               margin-left: -8px;
-              @include absolute-point(98, -7px);
+              @include absolute-point(99, -7px);
               left: 0;
             }
           }
         }
         >.control{
           width: 100%;
-          height: 100px;
+          height: 80px;
           display: flex;
           align-items: center;
           justify-content: space-around;

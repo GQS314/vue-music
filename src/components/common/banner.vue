@@ -29,13 +29,22 @@
           {type: 1, title: '热门', color: '#bf08a2'},
           {type: 2, title: '华语', color: '#c8a600'},
           {type: 3, title: '欧美', color: '#72cb00'},
-          {type: 4, title: '电音', color: '#06c9a6'}
+          {type: 4, title: '电音', color: '#06c9a6'},
+          {type: 10, title: '知识技能', color: '#cd2f2c'},
+          {type: 11, title: '音乐故事', color: '#bf08a2'},
+          {type: 12, title: '脱口秀', color: '#c8a600'},
+          {type: 13, title: '商业财经', color: '#72cb00'},
+          {type: 14, title: '有声书', color: '#06c9a6'}
         ]
       }
     },
     methods: {
       getColor(index) {
-        return this.typeColor[index];
+        for(let i = 0;i<this.typeColor.length;i++){
+          if(this.typeColor[i].type == index){
+            return this.typeColor[i];
+          }
+        }
       }
     },
     mounted() {

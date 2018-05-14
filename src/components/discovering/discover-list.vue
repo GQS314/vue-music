@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="discover-list">
     <banner :items="bannerList"></banner>
     <ul class="recommend-type">
       <li v-for="(item, index) in secList"
@@ -23,11 +23,11 @@
     data() {
       return {
         bannerList: [
-          {title: '霉霉', type: '0', link: '', imgUrl: 'http://www.daiwei.org/static/images/swiper/taylor%20swift.jpg'},
-          {title: '薛之谦', type: '1', link: '', imgUrl: 'http://p1.music.126.net/SPzFztesG0KPZKnq-9V3qA==/109951163291546754.jpg'},
-          {title: '花粥', type: '2', link: '', imgUrl: 'http://p1.music.126.net/-DtIvbFj7S9QEIhwvZlKkQ==/109951163291456756.jpg'},
-          {title: '张雪迎', type: '2', link: '', imgUrl: 'http://p1.music.126.net/NxNMS7aEMj0t-kdVqaH0Eg==/109951163292906160.jpg'},
-          {title: '风子', type: '1', link: '', imgUrl: 'http://p1.music.126.net/FsMohVoYNdRp4xcjoEFzGg==/109951163292914397.jpg'}
+          {title: '霉霉', type: 0, link: '', imgUrl: 'http://www.daiwei.org/static/images/swiper/taylor%20swift.jpg'},
+          {title: '薛之谦', type: 1, link: '', imgUrl: 'http://p1.music.126.net/SPzFztesG0KPZKnq-9V3qA==/109951163291546754.jpg'},
+          {title: '花粥', type: 2, link: '', imgUrl: 'http://p1.music.126.net/-DtIvbFj7S9QEIhwvZlKkQ==/109951163291456756.jpg'},
+          {title: '张雪迎', type: 2, link: '', imgUrl: 'http://p1.music.126.net/NxNMS7aEMj0t-kdVqaH0Eg==/109951163292906160.jpg'},
+          {title: '风子', type: 1, link: '', imgUrl: 'http://p1.music.126.net/FsMohVoYNdRp4xcjoEFzGg==/109951163292914397.jpg'}
         ],
         secList: [
           { icon: 'fm', title: '私人FM' },
@@ -128,27 +128,30 @@
 </script>
 
 <style lang="scss" scoped>
-  .recommend-type{
-    display: flex;
-    align-items: stretch;
-    >li{
-      padding-top: 10px;
-      width: auto;
-      flex: 1;
-      text-align: center;
-      >i{
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-        font-size: 3rem;
-        border-radius: 50%;
-        border: 1px solid $mainColor;
-        color: $mainColor;
-        display: inline-block;
+  .discover-list{
+    padding-bottom: $f-heigth;
+    >.recommend-type{
+      display: flex;
+      align-items: stretch;
+      >li{
+        padding-top: 10px;
+        width: auto;
+        flex: 1;
         text-align: center;
-      }
-      >p{
-        line-height: 30px;
+        >i{
+          width: 50px;
+          height: 50px;
+          line-height: 50px;
+          font-size: 3rem;
+          border-radius: 50%;
+          border: 1px solid $mainColor;
+          color: $mainColor;
+          display: inline-block;
+          text-align: center;
+        }
+        >p{
+          line-height: 30px;
+        }
       }
     }
   }

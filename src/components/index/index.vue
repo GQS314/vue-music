@@ -9,7 +9,8 @@
     <tabfoot></tabfoot>
     <transition name="coverTab">
       <div v-show="pageCoverIsShow" class="page-cover"
-           @click="hidePageCoverAction"></div>
+           @click="hidePageCoverAction"
+           @touchmove="dontTouchDrag($event)"></div>
     </transition>
     <transition name="setTab">
       <setting v-show="isShow"></setting>
@@ -32,13 +33,17 @@
     computed: {
       ...mapState({
         isShow: state => state.menulist.isShow,
-        pageCoverIsShow: 'pageCoverIsShow'
+        pageCoverIsShow: 'pageCoverIsShow',
+        listenIsShow: state => state.listening.listenIsShow
       })
     },
     methods: {
       ...mapActions([
         'hidePageCoverAction'
-      ])
+      ]),
+      dontTouchDrag(e) {
+        e.preventDefault();
+      }
     },
     components: {
       tabhead,
@@ -56,7 +61,7 @@
     width: 100%;
     height: 100%;
     margin: 0 auto;
-    padding: $h-heigth 0 $f-heigth;
+    padding-top: $h-heigth;
     >.page-cover{
       @include cover(0.6);
       @include fixed-point(100);

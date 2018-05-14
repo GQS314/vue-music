@@ -44,10 +44,10 @@
   .dis-conten{
     padding-top: 35px;
     >.nav{
-      width: 100%;
       position: fixed;
       top: $h-heigth;
       left: 0;
+      right: 0;
       z-index: 20;
       background: #fff;
       >ul{

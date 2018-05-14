@@ -30,15 +30,23 @@
     data() {
       return {
         bannerList: [
-          {title: '霉霉', type: '0', link: '', imgUrl: 'http://www.daiwei.org/static/images/swiper/taylor%20swift.jpg'},
-          {title: '薛之谦', type: '1', link: '', imgUrl: 'http://p1.music.126.net/SPzFztesG0KPZKnq-9V3qA==/109951163291546754.jpg'},
-          {title: '花粥', type: '2', link: '', imgUrl: 'http://p1.music.126.net/-DtIvbFj7S9QEIhwvZlKkQ==/109951163291456756.jpg'},
-          {title: '张雪迎', type: '2', link: '', imgUrl: 'http://p1.music.126.net/NxNMS7aEMj0t-kdVqaH0Eg==/109951163292906160.jpg'},
-          {title: '风子', type: '1', link: '', imgUrl: 'http://p1.music.126.net/FsMohVoYNdRp4xcjoEFzGg==/109951163292914397.jpg'}
+          {title: '霉霉', type: 10, link: '', imgUrl: 'http://p1.music.126.net/GN7YMF1ShhUufe3voJUOSQ==/109951163298385924.jpg'},
+          {title: '薛之谦', type: 11, link: '', imgUrl: 'http://p1.music.126.net/clrG9QrRS11UmoyAAEndRQ==/109951163298201001.jpg'},
+          {title: '花粥', type: 12, link: '', imgUrl: 'http://p1.music.126.net/NXrgfWE4-0ECCYmR3yjI2A==/109951163298218361.jpg'},
+          {title: '张雪迎', type: 13, link: '', imgUrl: 'http://p1.music.126.net/P-m1PlGa4FU_VCN1yOBnnQ==/109951163298194777.jpg'},
+          {title: '风子', type: 14, link: '', imgUrl: 'http://p1.music.126.net/y9SPAXaJocCKCLdHIXbtTQ==/109951163298445840.jpg'}
         ],
         premiumList: {
           title: '付费精品',
           list: [
+            {
+              title: '听歌学英文',
+              text: '用一首歌的时间学英文',
+              tip: '友邻优客课程《听歌学英文》推荐曲目整理',
+              money: '99',
+              update: '5月14日更新',
+              imgUrl: 'http://p3.music.126.net/UhFTkAsX7QnDyJtHTCTcqg==/19178781323873177.jpg?param=200y200'
+            },
             {
               title: '采铜·好书精读',
               text: '每周帮你消化一本好书',
@@ -65,7 +73,7 @@
                 text: '「四季情诗」穿越四季的爱恋',
                 imgUrl: 'http://p1.music.126.net/dpMOpjhBe864dTXA3e4IDA==/19184278882035262.jpg?param=140y140',
                 link: '',
-                tip: '69万'
+                tip: '69万万万万万万万万万万万万'
               },
               {
                 text: 'Tropic House‖夏日清新电子',
@@ -98,6 +106,29 @@
                 tip: '12338'
               }
             ]
+          },
+          {
+            title: '知识技能',
+            list: [
+              {
+                text: '「四季情诗」穿越四季的爱恋',
+                imgUrl: 'http://p1.music.126.net/dpMOpjhBe864dTXA3e4IDA==/19184278882035262.jpg?param=140y140',
+                link: '',
+                tip: '69万'
+              },
+              {
+                text: 'Tropic House‖夏日清新电子',
+                imgUrl: 'http://p1.music.126.net/Iep7e47HWG5l1aWYo_qACw==/18988565812110451.jpg?param=140y140',
+                link: '',
+                tip: '46万'
+              },
+              {
+                text: '华语｜那些温暖男声听起来总让人心疼',
+                imgUrl: 'http://p1.music.126.net/1sTMKmvEcyZTsRVs3ILrKA==/18767563976189991.jpg?param=140y140',
+                link: '',
+                tip: '5408万'
+              }
+            ]
           }
         ]
       }
@@ -112,6 +143,7 @@
 
 <style lang="scss" scoped>
   .djradio-list{
+    padding-bottom: $f-heigth;
     >.tabbar{
       display: flex;
       align-items: stretch;
